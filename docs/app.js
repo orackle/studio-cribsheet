@@ -2,6 +2,7 @@
 
 const CONTENT_MD_PATH = "CHEATSHEET.md";
 const _cb = "?v="+Date.now();
+const _cb = "?v="+Date.now();
 const contentEl = document.getElementById("content");
 const tocEl = document.getElementById("toc");
 const openMain = document.getElementById("js-open-main");
@@ -11,7 +12,7 @@ const openMain = document.getElementById("js-open-main");
 
 async function loadMarkdown() {
   try {
-    const res = await fetch(CONTENT_MD_PATH+_cb, { cache: "no-store" });
+    const res = await fetch(CONTENT_MD_PATH+_cb+_cb, { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to fetch cheatsheet");
     const md = await res.text();
     renderMarkdown(md);
