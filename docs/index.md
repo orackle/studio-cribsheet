@@ -2,6 +2,11 @@
 published: false
 ---
 
+<script>
+  window.location.replace('./index.html');
+</script>
+<p>If you are not redirected automatically, <a href="./index.html">click here</a>.</p>
+
 # Music Production Cheatsheet — Quick Reference
 
 **Quick Links**
