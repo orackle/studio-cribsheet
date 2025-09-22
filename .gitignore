@@ -1,0 +1,11 @@
+# env & cache
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# data/models (future)
+models/
+audio_samples/
+*.wav
+*.flac
