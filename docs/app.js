@@ -1,6 +1,6 @@
 // JS renderer: loads CHEATSHEET.md, renders with Marked, builds TOC, adds copy buttons.
 
-const CONTENT_MD_PATH = "../CHEATSHEET.md"; // relative to /docs/
+const CONTENT_MD_PATH = "./CHEATSHEET.md"; // relative to /docs/
 const contentEl = document.getElementById("content");
 const tocEl = document.getElementById("toc");
 const openMain = document.getElementById("js-open-main");
