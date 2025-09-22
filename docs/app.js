@@ -8,16 +8,27 @@ const openMain = document.getElementById("js-open-main");
 const themeToggle = document.getElementById("themeToggle");
 const accentToggle = document.getElementById("accentToggle");
 const searchInput = document.getElementById("siteSearch");
+const searchCountEl = document.getElementById("searchCount");
+const resetPrefsBtn = document.getElementById("resetPrefs");
 
-const PASTEL_POOL = ["#2ee6a5", "#b39df3", "#9ad1f7", "#ffcf86", "#a4e0cf", "#f0a6ca"];
+const PASTEL_POOL = [
+  "#2ee6a5", // mint
+  "#b39df3", // pastel purple
+  "#9ad1f7", // sky
+  "#ffcf86", // peach
+  "#a4e0cf", // aqua
+  "#f0a6ca", // pink
+  "#c4d7f2", // light cornflower
+  "#bde5c8", // sage
+  "#ffd6e0", // blush
+  "#d7c9ff"  // lavender
+];
 const LONG_SECTION_THRESHOLD = 6; // elements beyond heading
 
 function initTheme() {
   const root = document.documentElement;
   let theme = localStorage.getItem("theme");
-  if (!theme) {
-    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  }
+  if (!theme) { theme = 'light'; }
   root.setAttribute('data-theme', theme);
   updateThemeButton(theme);
 
@@ -84,6 +95,28 @@ function wireToolbar(){
       searchInput.blur();
     }
   });
+
+  if (resetPrefsBtn){
+    resetPrefsBtn.addEventListener('click', () => {
+      // Reset theme/accent
+      localStorage.removeItem('theme');
+      localStorage.removeItem('accent');
+      document.documentElement.setAttribute('data-theme', 'light');
+      updateThemeButton('light');
+      applyAccent('random');
+      localStorage.setItem('accent', 'random');
+      // Reset sections state
+      Object.keys(localStorage).forEach(k => { if (k.startsWith('section:')) localStorage.removeItem(k); });
+      // Re-apply collapsible defaults
+      const secs = document.querySelectorAll('details.section');
+      secs.forEach(sec => {
+        const bodyCount = sec.querySelectorAll(':scope > .body > *').length;
+        sec.open = bodyCount <= LONG_SECTION_THRESHOLD;
+      });
+      // Clear search
+      if (searchInput){ searchInput.value = ''; applySearch(''); }
+    });
+  }
 }
 
 async function loadMarkdown() {
@@ -217,6 +250,8 @@ function initSearch(){
     applySearch(e.target.value);
   }, 80);
   searchInput.addEventListener('input', onInput);
+  // initialize count
+  updateSearchCount(searchInput.value || '', searchIndex);
 }
 
 function applySearch(q){
@@ -225,6 +260,7 @@ function applySearch(q){
   if (!query){
     // show all
     searchIndex.forEach(item => item.node.style.display = '');
+    updateSearchCount('', searchIndex);
     return;
   }
   searchIndex.forEach(item => {
@@ -234,6 +270,18 @@ function applySearch(q){
       highlightMatches(item.node, query);
     }
   });
+  updateSearchCount(query, searchIndex);
+}
+
+function updateSearchCount(query, index){
+  if (!searchCountEl) return;
+  const total = index.length;
+  const visible = index.filter(i => i.node.style.display !== 'none').length;
+  if (!query){
+    searchCountEl.textContent = `${total} sections`;
+  } else {
+    searchCountEl.textContent = `${visible}/${total}`;
+  }
 }
 
 function highlightMatches(container, query){

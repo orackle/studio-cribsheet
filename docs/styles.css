@@ -10,7 +10,7 @@
   --accent:#2ee6a5; /* mint default */
   --surface:#0b1220;
   --surface-2:#0f1a2c;
-  --maxw:720px;
+  --maxw:960px;
   --radius:12px;
   --radius-sm:8px;
   --shadow: 0 0 0 1px var(--rule), 0 8px 20px rgba(0,0,0,.25);
@@ -71,7 +71,7 @@ a{color:var(--accent)}
 .toc a{color:var(--text); text-decoration:none}
 .toc a:hover{text-decoration:underline}
 
-.content{margin-top:12px}
+.content{margin-top:12px; max-width:760px; margin-left:auto; margin-right:auto}
 .content h2{margin:32px 0 8px 0; padding-top:12px; border-top:1px solid var(--rule)}
 .content h3{margin:24px 0 8px 0}
 .content p{margin:0 0 12px 0}
@@ -99,11 +99,10 @@ hr{border:0; border-top:1px solid var(--rule); margin:20px 0}
 /* Card grid */
 .cards {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   margin: 12px 0 8px;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
 }
-@media (min-width: 760px) { .cards { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 980px) { .cards { grid-template-columns: 1fr 1fr 1fr; } }
 
 .card {
   background:var(--surface);
@@ -177,4 +176,13 @@ mark{ background: color-mix(in oklab, var(--accent) 25%, transparent); color:inh
 @media (prefers-reduced-motion: no-preference){
   .card{ transition: transform .15s ease }
   .card:hover{ transform: translateY(-1px) }
+}
+
+/* Horizontal card layout on desktop */
+@media (min-width: 900px){
+  .card{ flex-direction: row; align-items: center; }
+  .card header{ flex: 1 1 240px; min-width: 220px; margin-right: 12px; }
+  .card .sparkline, .card .gauge{ flex: 0 0 140px; margin-right: 12px; }
+  .card ul.tight{ flex: 2 1 auto; }
+  .card footer{ flex: 0 0 auto; align-self: flex-start; margin-left: auto; }
 }

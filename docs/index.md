@@ -1,3 +1,7 @@
+---
+published: false
+---
+
 # Music Production Cheatsheet — Quick Reference
 
 **Quick Links**
