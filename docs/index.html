@@ -13,7 +13,151 @@
   <main>
     <header class="hero">
       <h1>Music Cheatsheets</h1>
-      <p class="subtitle">devhints-style notes for producers & audio engineers — clean, scannable, printable.</p>
+
+      <section class="cards">
+        <!-- EQ Ranges -->
+        <article class="card">
+          <header>
+            <h2>EQ Ranges</h2>
+            <p class="muted">Quick bands + common moves</p>
+          </header>
+          <figure class="sparkline" aria-label="Frequency emphasis">
+            <!-- Inline SVG: lows→highs bump -->
+            <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
+              <polyline points="0,18 15,16 30,14 45,10 60,8 75,12 90,18 100,20" />
+            </svg>
+          </figure>
+          <ul class="tight">
+            <li><strong>Sub 20–60</strong> — feel</li>
+            <li><strong>Bass 60–250</strong> — weight / mud</li>
+            <li><strong>Low-mids 250–500</strong> — boxy</li>
+            <li><strong>Mids 500–2k</strong> — body / presence</li>
+            <li><strong>High-mids 2–6k</strong> — clarity / harsh</li>
+            <li><strong>Highs 6–12k</strong> — air</li>
+          </ul>
+          <footer>
+            <a class="cta" href="#eq-more">Open section</a>
+          </footer>
+        </article>
+      
+        <!-- Delay Grid -->
+        <article class="card">
+          <header>
+            <h2>Delay Grid</h2>
+            <p class="muted">BPM → ms (straight / dotted / triplet)</p>
+          </header>
+          <div class="pillrow">
+            <span class="pill">Quarter</span>
+            <span class="pill">Eighth</span>
+            <span class="pill">16th</span>
+          </div>
+          <ul class="tight">
+            <li><strong>ms</strong> = (60000 / <em>BPM</em>) × fraction</li>
+            <li>dotted = 1.5× • triplet = 2⁄3×</li>
+          </ul>
+          <footer>
+            <a class="cta" href="calculators/">Open calculators</a>
+          </footer>
+        </article>
+      
+        <!-- Compressor Starters -->
+        <article class="card">
+          <header>
+            <h2>Compressor Starters</h2>
+            <p class="muted">Attack/Release by material</p>
+          </header>
+          <figure class="gauge" aria-label="Suggested ratio">
+            <!-- Simple LUFS/ratio dial -->
+            <svg viewBox="0 0 44 24" role="img" aria-hidden="true">
+              <path class="arc" d="M2,22 A20,20 0 0,1 42,22"/>
+              <circle class="needle" cx="22" cy="22" r="2"/>
+              <line class="hand" x1="22" y1="22" x2="35" y2="12"/>
+            </svg>
+          </figure>
+          <ul class="tight">
+            <li><strong>Vocals</strong> 3–5:1 • medium A/R</li>
+            <li><strong>Bass</strong> 4–8:1 • faster R</li>
+            <li><strong>Drum bus</strong> 2–4:1 • slow A, fast R</li>
+            <li><strong>Parallel</strong> add 10–30% squashed</li>
+          </ul>
+          <footer>
+            <a class="cta" href="#compression-more">Open section</a>
+          </footer>
+        </article>
+
+        <!-- Loudness Targets -->
+<article class="card" id="card-loudness">
+  <header>
+    <h2>Loudness Targets</h2>
+    <p class="muted">Streaming context & headroom</p>
+  </header>
+  <figure class="gauge" aria-label="Suggested mastering headroom and LUFS">
+    <!-- Semi-dial hinting at -14 LUFS / -1 dBTP -->
+    <svg viewBox="0 0 44 24" role="img" aria-hidden="true">
+      <path class="arc" d="M2,22 A20,20 0 0,1 42,22"/>
+      <!-- hand roughly pointing to the center -->
+      <line class="hand" x1="22" y1="22" x2="28" y2="12"/>
+      <circle class="needle" cx="22" cy="22" r="2"/>
+    </svg>
+  </figure>
+  <ul class="tight">
+    <li><strong>Streaming</strong>: ~ <strong>−14 LUFS</strong> (varies, normalization on)</li>
+    <li><strong>True peak</strong>: ≤ <strong>−1 dBTP</strong> (codec headroom)</li>
+    <li><strong>Measure</strong> with BS.1770 / EBU R128 meters</li>
+    <li><strong>Don’t chase</strong> exact LUFS; protect dynamics</li>
+  </ul>
+  <footer>
+    <a class="cta" href="#loudness--mastering">Open section</a>
+  </footer>
+</article>
+<!-- Vocal Chain -->
+<article class="card" id="card-vocals">
+  <header>
+    <h2>Vocal Chain</h2>
+    <p class="muted">Fast, clean starting recipe</p>
+  </header>
+  <figure class="sparkline" aria-label="HPF and air shelf sketch">
+    <!-- High-pass up left, gentle shelf up right -->
+    <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
+      <polyline points="0,20 15,20 30,18 45,14 60,12 75,10 90,8 100,8" />
+    </svg>
+  </figure>
+  <ul class="tight">
+    <li><strong>HPF</strong>: male 70–100 Hz • female 90–120 Hz</li>
+    <li><strong>Cut</strong>: tame 200–400 Hz if boxy</li>
+    <li><strong>Compress</strong>: ~3–5 dB GR • medium A/R</li>
+    <li><strong>De-ess</strong>: 5–8 kHz as needed</li>
+    <li><strong>Air</strong>: gentle shelf 8–12 kHz</li>
+  </ul>
+  <footer>
+    <a class="cta" href="#vocals--start">Open section</a>
+  </footer>
+</article>
+<!-- Export Checklist -->
+<article class="card" id="card-export">
+  <header>
+    <h2>Export Checklist</h2>
+    <p class="muted">One pass before you bounce</p>
+  </header>
+  <figure class="sparkline" aria-label="Final bounce timeline">
+    <!-- Flat line = consistent headroom to end -->
+    <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
+      <polyline points="0,14 20,14 40,14 60,14 80,14 100,14" />
+    </svg>
+  </figure>
+  <ul class="tight">
+    <li><strong>Format</strong>: WAV 24-bit • 44.1/48 kHz</li>
+    <li><strong>TP ceiling</strong>: ≈ −1 dBTP • check inter-sample</li>
+    <li><strong>Silence</strong>: tidy heads/tails as needed</li>
+    <li><strong>Metadata</strong>: ISRC/artist/title embedded</li>
+  </ul>
+  <footer>
+    <a class="cta" href="#export-checklist">Open section</a>
+  </footer>
+</article>
+
+      </section>
+      
       <nav class="quicklinks">
         <a href="#" id="js-open-main">🎛 Cheatsheet</a>
         <a href="design-cheatsheet.md">🧭 Design Rules</a>

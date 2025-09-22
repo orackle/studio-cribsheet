@@ -66,3 +66,52 @@ code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-
 .loading{color:var(--muted)}
 .footer{margin-top:28px; color:var(--muted); font-size:.95em}
 hr{border:0; border-top:1px solid var(--rule); margin:20px 0}
+/* Card grid */
+.cards {
+  display: grid;
+  gap: 16px;
+  margin: 12px 0 8px;
+}
+@media (min-width: 760px) { .cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 980px) { .cards { grid-template-columns: 1fr 1fr 1fr; } }
+
+.card {
+  background:#0b1220;
+  border:1px solid var(--rule);
+  border-radius:12px;
+  padding:14px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.card header h2 { margin:0 0 2px 0; font-size:18px; }
+.card header .muted { margin:0; color:var(--muted); font-size:14px; }
+.card .tight { margin:0; padding-left:18px; }
+.card .tight li { margin:6px 0; }
+.card footer { margin-top:auto; }
+.cta {
+  display:inline-block; padding:8px 10px; border-radius:8px;
+  border:1px solid var(--rule); color:var(--text); text-decoration:none;
+}
+.cta:hover { border-color:#2b8cff33; }
+
+/* Pills (simple preattentive grouping) */
+.pillrow { display:flex; gap:6px; flex-wrap:wrap; }
+.pill {
+  background:#0f1a2c; border:1px solid var(--rule); color:var(--text);
+  padding:4px 8px; border-radius:999px; font-size:12px;
+}
+
+/* Sparkline */
+.sparkline svg { width:100%; height:28px; }
+.sparkline polyline {
+  fill:none; stroke: var(--accent); stroke-width:2;
+  stroke-linecap:round; stroke-linejoin:round; opacity:.9;
+}
+
+/* Gauge */
+.gauge svg { width:120px; height:auto; display:block; }
+.gauge .arc { fill:none; stroke:var(--rule); stroke-width:3; }
+.gauge .hand { stroke:var(--accent); stroke-width:2; stroke-linecap:round; }
+.gauge .needle { fill:var(--accent); }
+
+/* Accessibility tweaks */
+.card strong { letter-spacing:.2px }
