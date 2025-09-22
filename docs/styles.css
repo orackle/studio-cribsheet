@@ -186,3 +186,21 @@ mark{ background: color-mix(in oklab, var(--accent) 25%, transparent); color:inh
   .card ul.tight{ flex: 2 1 auto; }
   .card footer{ flex: 0 0 auto; align-self: flex-start; margin-left: auto; }
 }
+
+/* Normalize card internals (override Pico defaults) */
+.cards{ align-items: stretch; }
+.card > header,
+.card > figure,
+.card > .sparkline,
+.card > .gauge,
+.card > ul,
+.card > footer{ margin: 0; }
+.card figure{ margin: 0; }
+.card ul{ margin: 0; }
+
+@media (min-width: 900px){
+  .card{ align-items: flex-start; gap: 12px; }
+  .card .sparkline, .card .gauge{ align-self: center; }
+  .card header{ margin-top: 2px; }
+  .card ul.tight{ margin-top: 4px; }
+}
