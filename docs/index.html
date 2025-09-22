@@ -1,22 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Music Cheatsheets</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Marked: tiny markdown renderer -->
+  <script src="https://unpkg.com/marked/marked.min.js"></script>
 </head>
 <body>
   <main>
-    <h1>Music Cheatsheets</h1>
-    <nav>
-      <ul>
-        <li><a href="index.md">🎛 Music Production Cheatsheet (Markdown)</a></li>
-        <li><a href="design-cheatsheet.md">🧭 Design Rules Cheatsheet</a></li>
-        <li><a href="cheatsheet.pdf">📄 Download PDF</a></li>
-      </ul>
-    </nav>
-    <p>Pick a cheatsheet above. Markdown files will render natively in GitHub Pages (plain) or you can click PDF for print.</p>
+    <header class="hero">
+      <h1>Music Cheatsheets</h1>
+      <p class="subtitle">devhints-style notes for producers & audio engineers — clean, scannable, printable.</p>
+      <nav class="quicklinks">
+        <a href="#" id="js-open-main">🎛 Cheatsheet</a>
+        <a href="design-cheatsheet.md">🧭 Design Rules</a>
+        <a href="cheatsheet.pdf">📄 Download PDF</a>
+      </nav>
+    </header>
+
+    <aside id="toc" class="toc" aria-label="On this page"></aside>
+
+    <article id="content" class="content" aria-label="Cheatsheet content">
+      <div class="loading">Loading cheatsheet…</div>
+    </article>
+
+    <footer class="footer">
+      <p>Made with ♥ — <a href="https://github.com">GitHub Pages</a>. One idea per line. Keep it skinny.</p>
+    </footer>
   </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
