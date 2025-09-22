@@ -1,5 +1,12 @@
 # Music Production Cheatsheet — Quick Reference
 
+**Quick Links**
+- 🎛 [Music Production Cheatsheet](../CHEATSHEET.md)
+- 🧭 [Design Rules Cheatsheet](./design-cheatsheet.md)
+- 📄 [Download PDF](./cheatsheet.pdf)
+
+---
+
 ## Session & Gain Staging
 
 * Average around **−18 dBFS ≈ 0 VU**; keep track peaks **−6 to −3 dB** pre-master.
