@@ -47,7 +47,7 @@ h1 { margin: 0 0 8px 0; font-weight: 700; letter-spacing: .2px; }
 
 a { color: var(--accent); }
 
-.toc {
+/* .toc {
   border: 1px solid var(--rule);
   border-radius: 10px;
   padding: 12px;
@@ -59,7 +59,7 @@ a { color: var(--accent); }
 .toc ul { list-style: none; padding: 0; margin: 0; }
 .toc li { margin: 6px 0; }
 .toc a { color: var(--text); text-decoration: none; }
-.toc a:hover { text-decoration: underline; }
+.toc a:hover { text-decoration: underline; } */
 
 .content { margin-top: 12px; }
 .content h2 {
@@ -246,3 +246,48 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 20px 0; }
   font-size: 14px;
 }
 .togglebtn:hover { border-color: var(--accent); }
+/* Layout with left TOC */
+/* Left-aligned skinny TOC */
+.toc {
+  position: absolute;
+  left: 0;
+  top: 120px; /* adjust so it clears your header */
+  width: 160px;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  text-align: left;
+}
+
+.toc h3 {
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.toc ul { list-style: none; padding: 0; margin: 0; }
+.toc li { margin: 4px 0; }
+.toc a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.toc a:hover { color: var(--accent); }
+
+/* Keep centered content intact */
+main {
+  position: relative; /* so TOC can anchor to it */
+}
+
+/* Hide/move TOC on small screens */
+@media (max-width: 900px) {
+  .toc {
+    position: static;
+    width: auto;
+    margin: 16px 0;
+  }
+}
