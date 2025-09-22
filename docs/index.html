@@ -6,8 +6,8 @@
   <title>Music Cheatsheets</title>
   <link rel="stylesheet" href="styles.css" />
   <!-- Marked: tiny markdown renderer -->
-<script src="app.js" defer></script>  
-<script src="vendor/marked.min.js" defer></script>
+  <script src="vendor/marked.min.js" defer></script>
+  <script src="app.js" defer></script>  
 </head>
 <body>
   <main>
@@ -22,11 +22,11 @@
             <p class="muted">Quick bands + common moves</p>
           </header>
           <figure class="sparkline" aria-label="Frequency emphasis">
-            <!-- Inline SVG: lows→highs bump -->
             <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
               <polyline points="0,18 15,16 30,14 45,10 60,8 75,12 90,18 100,20" />
             </svg>
           </figure>
+          <div class="eq-bar" aria-hidden="true"></div>
           <ul class="tight">
             <li><strong>Sub 20–60</strong> — feel</li>
             <li><strong>Bass 60–250</strong> — weight / mud</li>
@@ -51,6 +51,11 @@
             <span class="pill">Eighth</span>
             <span class="pill">16th</span>
           </div>
+          <div class="delay-grid">
+            <span>♩ = 1/4</span>
+            <span>♪ = 1/8</span>
+            <span>♫ = 1/16</span>
+          </div>
           <ul class="tight">
             <li><strong>ms</strong> = (60000 / <em>BPM</em>) × fraction</li>
             <li>dotted = 1.5× • triplet = 2⁄3×</li>
@@ -67,7 +72,6 @@
             <p class="muted">Attack/Release by material</p>
           </header>
           <figure class="gauge" aria-label="Suggested ratio">
-            <!-- Simple LUFS/ratio dial -->
             <svg viewBox="0 0 44 24" role="img" aria-hidden="true">
               <path class="arc" d="M2,22 A20,20 0 0,1 42,22"/>
               <circle class="needle" cx="22" cy="22" r="2"/>
@@ -86,96 +90,92 @@
         </article>
 
         <!-- Loudness Targets -->
-<article class="card" id="card-loudness">
-  <header>
-    <h2>Loudness Targets</h2>
-    <p class="muted">Streaming context & headroom</p>
-  </header>
-  <figure class="gauge" aria-label="Suggested mastering headroom and LUFS">
-    <!-- Semi-dial hinting at -14 LUFS / -1 dBTP -->
-    <svg viewBox="0 0 44 24" role="img" aria-hidden="true">
-      <path class="arc" d="M2,22 A20,20 0 0,1 42,22"/>
-      <!-- hand roughly pointing to the center -->
-      <line class="hand" x1="22" y1="22" x2="28" y2="12"/>
-      <circle class="needle" cx="22" cy="22" r="2"/>
-    </svg>
-  </figure>
-  <ul class="tight">
-    <li><strong>Streaming</strong>: ~ <strong>−14 LUFS</strong> (varies, normalization on)</li>
-    <li><strong>True peak</strong>: ≤ <strong>−1 dBTP</strong> (codec headroom)</li>
-    <li><strong>Measure</strong> with BS.1770 / EBU R128 meters</li>
-    <li><strong>Don’t chase</strong> exact LUFS; protect dynamics</li>
-  </ul>
-  <footer>
-    <a class="cta" href="#loudness--mastering">Open section</a>
-  </footer>
-</article>
-<!-- Vocal Chain -->
-<article class="card" id="card-vocals">
-  <header>
-    <h2>Vocal Chain</h2>
-    <p class="muted">Fast, clean starting recipe</p>
-  </header>
-  <figure class="sparkline" aria-label="HPF and air shelf sketch">
-    <!-- High-pass up left, gentle shelf up right -->
-    <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
-      <polyline points="0,20 15,20 30,18 45,14 60,12 75,10 90,8 100,8" />
-    </svg>
-  </figure>
-  <ul class="tight">
-    <li><strong>HPF</strong>: male 70–100 Hz • female 90–120 Hz</li>
-    <li><strong>Cut</strong>: tame 200–400 Hz if boxy</li>
-    <li><strong>Compress</strong>: ~3–5 dB GR • medium A/R</li>
-    <li><strong>De-ess</strong>: 5–8 kHz as needed</li>
-    <li><strong>Air</strong>: gentle shelf 8–12 kHz</li>
-  </ul>
-  <footer>
-    <a class="cta" href="#vocals--start">Open section</a>
-  </footer>
-</article>
-<!-- Export Checklist -->
-<article class="card" id="card-export">
-  <header>
-    <h2>Export Checklist</h2>
-    <p class="muted">One pass before you bounce</p>
-  </header>
-  <figure class="sparkline" aria-label="Final bounce timeline">
-    <!-- Flat line = consistent headroom to end -->
-    <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
-      <polyline points="0,14 20,14 40,14 60,14 80,14 100,14" />
-    </svg>
-  </figure>
-  <ul class="tight">
-    <li><strong>Format</strong>: WAV 24-bit • 44.1/48 kHz</li>
-    <li><strong>TP ceiling</strong>: ≈ −1 dBTP • check inter-sample</li>
-    <li><strong>Silence</strong>: tidy heads/tails as needed</li>
-    <li><strong>Metadata</strong>: ISRC/artist/title embedded</li>
-  </ul>
-  <footer>
-    <a class="cta" href="#export-checklist">Open section</a>
-  </footer>
-</article>
+        <article class="card" id="card-loudness">
+          <header>
+            <h2>Loudness Targets</h2>
+            <p class="muted">Streaming context & headroom</p>
+          </header>
+          <figure class="gauge" aria-label="Suggested mastering headroom and LUFS">
+            <svg viewBox="0 0 44 24" role="img" aria-hidden="true">
+              <path class="arc" d="M2,22 A20,20 0 0,1 42,22"/>
+              <line class="hand" x1="22" y1="22" x2="28" y2="12"/>
+              <circle class="needle" cx="22" cy="22" r="2"/>
+            </svg>
+          </figure>
+          <ul class="tight">
+            <li><strong>Streaming</strong>: ~ <strong>−14 LUFS</strong></li>
+            <li><strong>True peak</strong>: ≤ <strong>−1 dBTP</strong></li>
+            <li><strong>Measure</strong> with BS.1770 / EBU R128 meters</li>
+            <li><strong>Don’t chase</strong> exact LUFS; protect dynamics</li>
+          </ul>
+          <footer>
+            <a class="cta" href="#loudness--mastering">Open section</a>
+          </footer>
+        </article>
 
+        <!-- Vocal Chain -->
+        <article class="card" id="card-vocals">
+          <header>
+            <h2>Vocal Chain</h2>
+            <p class="muted">Fast, clean starting recipe</p>
+          </header>
+          <figure class="sparkline">
+            <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
+              <polyline points="0,20 15,20 30,18 45,14 60,12 75,10 90,8 100,8" />
+            </svg>
+          </figure>
+          <ul class="tight">
+            <li><strong>HPF</strong>: male 70–100 Hz • female 90–120 Hz</li>
+            <li><strong>Cut</strong>: tame 200–400 Hz if boxy</li>
+            <li><strong>Compress</strong>: ~3–5 dB GR • medium A/R</li>
+            <li><strong>De-ess</strong>: 5–8 kHz as needed</li>
+            <li><strong>Air</strong>: gentle shelf 8–12 kHz</li>
+          </ul>
+          <footer>
+            <a class="cta" href="#vocals--start">Open section</a>
+          </footer>
+        </article>
+
+        <!-- Export Checklist -->
+        <article class="card" id="card-export">
+          <header>
+            <h2>Export Checklist</h2>
+            <p class="muted">One pass before you bounce</p>
+          </header>
+          <figure class="sparkline">
+            <svg viewBox="0 0 100 24" role="img" aria-hidden="true">
+              <polyline class="export-line" points="0,14 20,14 40,14 60,14 80,14 100,14" />
+            </svg>
+          </figure>
+          <ul class="tight">
+            <li><strong>Format</strong>: WAV 24-bit • 44.1/48 kHz</li>
+            <li><strong>TP ceiling</strong>: ≈ −1 dBTP • check inter-sample</li>
+            <li><strong>Silence</strong>: tidy heads/tails</li>
+            <li><strong>Metadata</strong>: ISRC/artist/title embedded</li>
+          </ul>
+          <footer>
+            <a class="cta" href="#export-checklist">Open section</a>
+          </footer>
+        </article>
       </section>
       
       <nav class="quicklinks">
         <a href="#" id="js-open-main">🎛 Cheatsheet</a>
         <a href="design-cheatsheet.md">🧭 Design Rules</a>
         <a href="cheatsheet.pdf">📄 Download PDF</a>
+        <button id="theme-toggle" class="togglebtn">🌙/☀️</button>
       </nav>
     </header>
 
     <aside id="toc" class="toc" aria-label="On this page"></aside>
 
-    <article id="content" class="content" aria-label="Cheatsheet content">
+    <article id="content" class="content">
       <div class="loading">Loading cheatsheet…</div>
     </article>
 
     <footer class="footer">
-      <p>Made with ♥ — <a href="https://github.com">GitHub Pages</a>. One idea per line. Keep it skinny.</p>
+      <p>Made with ♥ — <a href="https://github.com">GitHub Pages</a>.</p>
     </footer>
   </main>
-
-  <script src="app.js" defer></script>
 </body>
 </html>

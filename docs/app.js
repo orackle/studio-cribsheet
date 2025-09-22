@@ -1,6 +1,4 @@
-// JS renderer: loads CHEATSHEET.md in /docs, renders with Marked, builds TOC, adds copy buttons.
-
-const CONTENT_MD_PATH = "CHEATSHEET.md"; // same folder as index.html
+const CONTENT_MD_PATH = "CHEATSHEET.md";
 
 const contentEl = document.getElementById("content");
 const tocEl = document.getElementById("toc");
@@ -13,7 +11,8 @@ async function loadMarkdown() {
     const md = await res.text();
     renderMarkdown(md);
   } catch (err) {
-    contentEl.innerHTML = `<p class="loading">Error loading cheatsheet. Open it directly: <a href="CHEATSHEET.md">CHEATSHEET.md</a></p>`;
+    contentEl.innerHTML = `<p class="loading">Error loading cheatsheet. 
+      <a href="CHEATSHEET.md">CHEATSHEET.md</a></p>`;
     console.error(err);
   }
 }
@@ -23,10 +22,12 @@ function renderMarkdown(md) {
   contentEl.innerHTML = marked.parse(md);
   enhanceCodeBlocks();
   buildTOC();
-  openMain?.addEventListener("click", (e) => {
+
+  openMain?.addEventListener("click", e => {
     e.preventDefault();
     contentEl.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
   if (location.hash) {
     const target = document.querySelector(decodeURIComponent(location.hash));
     if (target) target.scrollIntoView({ behavior: "smooth" });
@@ -61,12 +62,42 @@ function enhanceCodeBlocks() {
     btn.className = "copybtn";
     btn.textContent = "Copy";
     btn.addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(code.innerText);
-        btn.textContent = "Copied!"; setTimeout(() => btn.textContent = "Copy", 1200);
-      } catch { btn.textContent = "Failed"; setTimeout(() => btn.textContent = "Copy", 1200); }
+      try {
+        await navigator.clipboard.writeText(code.innerText);
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = "Copy", 1200);
+      } catch {
+        btn.textContent = "Failed";
+        setTimeout(() => btn.textContent = "Copy", 1200);
+      }
     });
-    pre.before(bar); bar.appendChild(btn);
+    pre.before(bar);
+    bar.appendChild(btn);
   });
 }
+
+// Theme toggle
+const themeBtn = document.getElementById("theme-toggle");
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => {
+    document.documentElement.classList.toggle("light");
+    localStorage.setItem("theme",
+      document.documentElement.classList.contains("light") ? "light" : "dark"
+    );
+  });
+  if (localStorage.getItem("theme") === "light") {
+    document.documentElement.classList.add("light");
+  }
+}
+
+// Optional keyboard shortcut (press L)
+document.addEventListener("keydown", e => {
+  if (e.key.toLowerCase() === "l") {
+    document.documentElement.classList.toggle("light");
+    localStorage.setItem("theme",
+      document.documentElement.classList.contains("light") ? "light" : "dark"
+    );
+  }
+});
 
 loadMarkdown();
