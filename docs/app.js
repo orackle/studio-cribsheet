@@ -1,4 +1,6 @@
-const CONTENT_MD_PATH = "CHEATSHEET.md";
+// JS renderer: loads CHEATSHEET.md in /docs, renders with Marked, builds TOC, adds copy buttons.
+
+const CONTENT_MD_PATH = "CHEATSHEET.md"; // same folder as index.html
 
 const contentEl = document.getElementById("content");
 const tocEl = document.getElementById("toc");
@@ -22,8 +24,7 @@ function renderMarkdown(md) {
   contentEl.innerHTML = marked.parse(md);
   enhanceCodeBlocks();
   buildTOC();
-
-  openMain?.addEventListener("click", e => {
+  openMain?.addEventListener("click", (e) => {
     e.preventDefault();
     contentEl.scrollIntoView({ behavior: "smooth", block: "start" });
   });
@@ -75,29 +76,5 @@ function enhanceCodeBlocks() {
     bar.appendChild(btn);
   });
 }
-
-// Theme toggle
-const themeBtn = document.getElementById("theme-toggle");
-if (themeBtn) {
-  themeBtn.addEventListener("click", () => {
-    document.documentElement.classList.toggle("light");
-    localStorage.setItem("theme",
-      document.documentElement.classList.contains("light") ? "light" : "dark"
-    );
-  });
-  if (localStorage.getItem("theme") === "light") {
-    document.documentElement.classList.add("light");
-  }
-}
-
-// Optional keyboard shortcut (press L)
-document.addEventListener("keydown", e => {
-  if (e.key.toLowerCase() === "l") {
-    document.documentElement.classList.toggle("light");
-    localStorage.setItem("theme",
-      document.documentElement.classList.contains("light") ? "light" : "dark"
-    );
-  }
-});
 
 loadMarkdown();
