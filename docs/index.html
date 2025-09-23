@@ -6,17 +6,18 @@
   <title>Music Cheatsheets</title>
   <link rel="stylesheet" href="styles.css" />
   <!-- Marked: tiny markdown renderer -->
-<script src="app.js" defer></script>  
-<script src="vendor/marked.min.js" defer></script>
+  <script src="vendor/marked.min.js" defer></script>
+  <script src="app.js" defer></script>  
 </head>
 <body>
+  <button id="theme-toggle" class="togglebtn">🌙/☀️</button>
   <main>
     <header class="hero">
       <h1>Music Cheatsheets</h1>
 
       <section class="cards">
         <!-- EQ Ranges -->
-        <article class="card">
+        <article class="card has-figure">
           <header>
             <h2>EQ Ranges</h2>
             <p class="muted">Quick bands + common moves</p>
@@ -66,7 +67,7 @@
         </article>
       
         <!-- Compressor Starters -->
-        <article class="card">
+        <article class="card has-figure">
           <header>
             <h2>Compressor Starters</h2>
             <p class="muted">Attack/Release by material</p>
@@ -90,7 +91,7 @@
         </article>
 
         <!-- Loudness Targets -->
-        <article class="card" id="card-loudness">
+        <article class="card has-figure" id="card-loudness">
           <header>
             <h2>Loudness Targets</h2>
             <p class="muted">Streaming context & headroom</p>
@@ -114,7 +115,7 @@
         </article>
 
         <!-- Vocal Chain -->
-        <article class="card" id="card-vocals">
+        <article class="card has-figure" id="card-vocals">
           <header>
             <h2>Vocal Chain</h2>
             <p class="muted">Fast, clean starting recipe</p>
@@ -137,7 +138,7 @@
         </article>
 
         <!-- Export Checklist -->
-        <article class="card" id="card-export">
+        <article class="card has-figure" id="card-export">
           <header>
             <h2>Export Checklist</h2>
             <p class="muted">One pass before you bounce</p>
@@ -163,7 +164,6 @@
         <a href="#" id="js-open-main">🎛 Cheatsheet</a>
         <a href="design-cheatsheet.md">🧭 Design Rules</a>
         <a href="cheatsheet.pdf">📄 Download PDF</a>
-        <button id="theme-toggle" class="togglebtn">🌙/☀️</button>
       </nav>
     </header>
 
@@ -173,12 +173,7 @@
       <div class="loading">Loading cheatsheet…</div>
     </article>
 
-    <footer class="footer">
-      <p>Made with ♥ — <a href="https://github.com">GitHub Pages</a>.</p>
-    </footer>
+ 
   </main>
-
-  <script src="app.js" defer></script>
 </body>
 </html>
-  

@@ -78,3 +78,22 @@ function enhanceCodeBlocks() {
 }
 
 loadMarkdown();
+// Theme toggle
+const themeBtn = document.getElementById("theme-toggle");
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => {
+    document.documentElement.classList.toggle("light");
+    localStorage.setItem(
+      "theme",
+      document.documentElement.classList.contains("light") ? "light" : "dark"
+    );
+  });
+
+  // Default: light mode, unless user saved "dark"
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark") {
+    document.documentElement.classList.remove("light");
+  } else {
+    document.documentElement.classList.add("light");
+  }
+}
