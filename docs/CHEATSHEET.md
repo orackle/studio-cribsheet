@@ -1,6 +1,6 @@
 # Music Production Cheatsheet — Quick Reference
 
-## Session & Gain Staging {#session-gain-staging}
+## Session & Gain Staging
 
 * Average around **−18 dBFS ≈ 0 VU**; keep track peaks **−6 to −3 dB** pre-master.
 * Do clip-gain before compression; avoid redlining plugin inputs.
@@ -11,7 +11,7 @@ def db_to_linear(db): return 10 ** (db/20)
 def linear_to_db(x):  return 20 * math.log10(x)
 ```
 
-## Tempo / Delay / Reverb {#tempo-delay-reverb}
+## Tempo / Delay / Reverb
 
 * **Note time (ms)**: `ms = (60000 / BPM) * fraction` (dotted = `1.5×`, triplet = `2/3×`).
 * **Common fractions**: whole 1 • half 0.5 • quarter 0.25 • eighth 0.125 • 16th 0.0625 • dotted-8th 0.375 • 8th-triplet **1/12 ≈ 0.0833**.
@@ -22,7 +22,7 @@ NOTE = {"1":1,"1/2":0.5,"1/4":0.25,"1/8":0.125,"1/16":0.0625,"1/4d":0.375,"1/8d"
 def note_ms(bpm, k): return (60000.0/bpm) * NOTE[k]
 ```
 
-## EQ Ranges (starting points) {#eq-ranges-starting-points}
+## EQ Ranges (starting points)
 
 * **Sub** 20–60 Hz — feel
 * **Bass** 60–250 Hz — weight / mud
@@ -34,7 +34,7 @@ def note_ms(bpm, k): return (60000.0/bpm) * NOTE[k]
 
 ---
 
-## Compression (starters) {#compression-starters}
+## Compression (starters)
 
 * **Attack**: slow = more transient; fast = tighter.
 * **Release**: fast = lively; slow = smooth.
@@ -43,7 +43,7 @@ def note_ms(bpm, k): return (60000.0/bpm) * NOTE[k]
 
 ---
 
-## Stereo & Phase {#stereo--phase}
+## Stereo & Phase
 
 * Keep **<150–200 Hz mono** on the master.
 * Mid/Side: cut low-mid in sides; add gentle air to sides if needed.
@@ -51,7 +51,7 @@ def note_ms(bpm, k): return (60000.0/bpm) * NOTE[k]
 
 ---
 
-## Loudness & Mastering {#loudness--mastering}
+## Loudness & Mastering
 
 * Use **ITU-R BS.1770 / EBU R128** meters (LUFS, true-peak).
 * Streaming context: aim around **−14 LUFS integrated** (playback normalization varies).
@@ -63,14 +63,14 @@ def lufs_gain_db(measured, target=-14.0): return target - measured
 
 ---
 
-## Sample Rate / Bit Depth {#sample-rate--bit-depth}
+## Sample Rate / Bit Depth
 
 * **44.1 kHz** music • **48 kHz** video; Nyquist = `sample_rate / 2`.
 * Work at **24-bit**; dither **once** at final export when reducing bit depth.
 
 ---
 
-## MIDI Essentials {#midi-essentials}
+## MIDI Essentials
 
 * **CC**: 1 Mod • 7 Volume • 10 Pan • 11 Expression • 64 Sustain (0–127).
 * Program Change selects patch; Pitch Bend is typically 14-bit.
@@ -90,7 +90,7 @@ def freq_to_midi(f, a4=440):  return round(69 + 12*math.log2(f/a4))
 
 ---
 
-## Vocals (start) {#vocals--start}
+## Vocals (start)
 
 * HPF: male **70–100 Hz**, female **90–120 Hz**.
 * Tame **200–400 Hz** if boxy; compress **\~3–5 dB GR**.
@@ -98,7 +98,7 @@ def freq_to_midi(f, a4=440):  return round(69 + 12*math.log2(f/a4))
 
 ---
 
-## Drums (start) {#drums--start}
+## Drums (start)
 
 * **Kick**: +50–80 Hz body • −200–300 Hz box • +2–4 kHz click.
 * **Snare**: 150–250 Hz body • 5–7 kHz crack • tame \~800 Hz.
@@ -120,7 +120,7 @@ def freq_to_midi(f, a4=440):  return round(69 + 12*math.log2(f/a4))
 
 ---
 
-## Export Checklist {#export-checklist}
+## Export Checklist
 
 * WAV **24-bit**, **44.1/48 kHz**.
 * True-peak ceiling **≈ −1 dBTP**; check inter-sample peaks.
@@ -128,7 +128,7 @@ def freq_to_midi(f, a4=440):  return round(69 + 12*math.log2(f/a4))
 
 ---
 
-## Handy Converters {#handy-converters}
+## Handy Converters
 
 * **Semitones → speed**: `2 ** (n/12)`
 * **BPM stretch**: `old_bpm / new_bpm`
