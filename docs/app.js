@@ -98,39 +98,41 @@ if (themeBtn) {
   }
 }
 
+// ---- Calculators Overlay (robust, delegated) ----
+(function initCalculatorsDelegated() {
 
-// ---- Calculators Overlay ----
-(function initCalculators() {
-  function findCalcTrigger() {
-    return (
-      document.querySelector('[data-open-calcs]') ||
-      document.querySelector('a[href="calculators/"]')
-    );
-  }
+  // Delegate clicks on any element that matches [data-open-calcs] OR links that point to "calculators" path
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-open-calcs]') ||
+                    e.target.closest('a[href$="calculators/"]') ||
+                    e.target.closest('a[href$="calculators"]');
+    if (!trigger) return;
 
-  const trigger = findCalcTrigger();
-  if (!trigger) return;
-
-  trigger.addEventListener('click', (e) => {
+    // Prevent navigation (anchor fallback), then open modal
     e.preventDefault();
     openCalculatorsOverlay();
   });
 
+  // utility math (kept from your original)
   function bpmToMs(bpm, fraction, mode) {
-    // quarter note ms = 60000 / bpm
     const base = 60000 / bpm;
     let mult = 1;
-    if (mode === 'straight') mult = 1;
     if (mode === 'dotted') mult = 1.5;
     if (mode === 'triplet') mult = 2 / 3;
     return base * fraction * mult;
   }
+  function msToSamples(ms, sr) { return Math.round((ms / 1000) * sr); }
 
-  function msToSamples(ms, sampleRate) {
-    return Math.round((ms / 1000) * sampleRate);
-  }
-
+  // Ensure only one modal exists at a time
   function openCalculatorsOverlay() {
+    if (document.querySelector('.calc-overlay')) {
+      // already open — focus BPM input if present
+      const existing = document.querySelector('.calc-overlay #calc-bpm');
+      if (existing) { existing.focus(); existing.select(); }
+      return;
+    }
+
+    // ---------- Modal HTML (same template you had) ----------
     const overlay = document.createElement('div');
     overlay.className = 'calc-overlay';
     overlay.innerHTML = `
@@ -140,7 +142,7 @@ if (themeBtn) {
           <button class="calc-close" type="button" aria-label="Close">✕</button>
         </div>
         <div class="calc-body">
-          <div class="calc-row">
+          <div class="calc-row cols-3">
             <div class="calc-field">
               <label class="calc-label" for="calc-bpm">BPM</label>
               <input id="calc-bpm" class="calc-input" type="number" min="1" max="400" step="0.1" value="120" />
@@ -165,7 +167,7 @@ if (themeBtn) {
             </div>
           </div>
 
-          <div class="calc-row">
+          <div class="calc-row cols-3">
             <div class="calc-field">
               <label class="calc-label">Sample Rates</label>
               <select id="calc-sr" class="calc-select">
@@ -208,8 +210,7 @@ if (themeBtn) {
     `;
     document.body.appendChild(overlay);
 
-    const modal = overlay.querySelector('.calc-modal');
-    const closeBtns = overlay.querySelectorAll('.calc-close');
+    // ----- element refs -----
     const bpmEl = overlay.querySelector('#calc-bpm');
     const srEl = overlay.querySelector('#calc-sr');
     const copyFmtEl = overlay.querySelector('#calc-copyfmt');
@@ -219,7 +220,9 @@ if (themeBtn) {
     const resetTapBtn = overlay.querySelector('#calc-reset');
     const tapReadout = overlay.querySelector('#calc-tap-readout');
     const copyAllBtn = overlay.querySelector('#calc-copy-all');
+    const closeBtns = overlay.querySelectorAll('.calc-close');
 
+    // ----- state -----
     let mode = 'straight';
     let tapTimes = [];
 
@@ -248,10 +251,13 @@ if (themeBtn) {
       });
 
       tbody.innerHTML = rows.map(r => `
-        <tr>
+        <tr class="calc-row-item"
+            data-note="${r.label}"
+            data-ms="${r.ms.toFixed(2)}"
+            data-samples="${r.samples}">
           <td>${r.label}</td>
-          <td>${r.ms.toFixed(2)}</td>
-          <td>${r.samples.toLocaleString()}</td>
+          <td style="text-align:right">${r.ms.toFixed(2)}</td>
+          <td style="text-align:right">${r.samples.toLocaleString()}</td>
           <td>
             <div class="calc-actions">
               <button class="calc-mini" data-copy="ms" data-ms="${r.ms.toFixed(2)}">Copy ms</button>
@@ -268,14 +274,15 @@ if (themeBtn) {
       updateTable();
     }
 
-    tabs.forEach(t => {
-      t.addEventListener('click', () => setMode(t.dataset.mode));
-    });
+    // tab clicks
+    tabs.forEach(t => t.addEventListener('click', () => setMode(t.dataset.mode)));
 
+    // inputs
     bpmEl.addEventListener('input', updateTable);
     srEl.addEventListener('change', updateTable);
+
+    // copy table
     copyAllBtn.addEventListener('click', async () => {
-      const fmt = copyFmtEl.value;
       const sr = parseInt(srEl.value, 10);
       const bpm = activeBpm();
       let text = `BPM ${bpm} — ${mode}\nSample Rate: ${sr}\n\n`;
@@ -291,33 +298,31 @@ if (themeBtn) {
       } catch {}
     });
 
+    // row-level click + copy handling
     tbody.addEventListener('click', async (e) => {
       const btn = e.target.closest('button');
-    
-      // If a copy button was clicked, handle and stop here
+      // copy ms
       if (btn?.dataset.copy === 'ms') {
         try {
           await navigator.clipboard.writeText(btn.dataset.ms);
           btn.textContent = '✓';
           setTimeout(() => (btn.textContent = 'Copy ms'), 700);
         } catch {}
-        e.stopPropagation();
         return;
       }
+      // copy samples
       if (btn?.dataset.copy === 'samples') {
         try {
           await navigator.clipboard.writeText(btn.dataset.samples);
           btn.textContent = '✓';
           setTimeout(() => (btn.textContent = 'Copy samples'), 700);
         } catch {}
-        e.stopPropagation();
         return;
       }
-    
-      // Otherwise, treat it as a row click → return & close
+
+      // otherwise, if clicking a row, return that row's values
       const tr = e.target.closest('.calc-row-item');
       if (!tr) return;
-    
       const detail = {
         type: 'delay',
         note: tr.dataset.note,
@@ -328,16 +333,14 @@ if (themeBtn) {
         sampleRate: parseInt(srEl.value, 10),
       };
       window.dispatchEvent(new CustomEvent('calc:return', { detail }));
-      close();
+      closeOverlay();
     });
-    
 
-    // Tap tempo
+    // Tap tempo logic
     function registerTap() {
       const now = performance.now();
       tapTimes.push(now);
-      // keep recent taps (last ~8s)
-      tapTimes = tapTimes.filter(t => now - t < 8000);
+      tapTimes = tapTimes.filter(t => now - t < 8000); // keep recent
       if (tapTimes.length >= 2) {
         const intervals = [];
         for (let i = 1; i < tapTimes.length; i++) intervals.push(tapTimes[i] - tapTimes[i - 1]);
@@ -350,14 +353,12 @@ if (themeBtn) {
         tapReadout.textContent = 'Tap again…';
       }
     }
-
     tapBtn.addEventListener('click', registerTap);
-    
     resetTapBtn.addEventListener('click', () => { tapTimes = []; tapReadout.textContent = ''; });
 
+    // keyboard handlers
     function onKey(e) {
-      if (e.key === 'Escape') { close(); }
-      // Space to tap (avoid when focused on inputs)
+      if (e.key === 'Escape') { closeOverlay(); }
       const tag = (document.activeElement?.tagName || '').toLowerCase();
       if (e.key === ' ' && tag !== 'input' && tag !== 'textarea') {
         e.preventDefault();
@@ -365,25 +366,24 @@ if (themeBtn) {
       }
     }
 
-    function close() {
+    // close helpers
+    function closeOverlay() {
       window.removeEventListener('keydown', onKey);
       overlay.remove();
     }
-
-    closeBtns.forEach(b => b.addEventListener('click', close));
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) close();
-    });
+    closeBtns.forEach(b => b.addEventListener('click', closeOverlay));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeOverlay(); });
     window.addEventListener('keydown', onKey);
 
-    // init
+    // init state
     setMode('straight');
     updateTable();
-    // focus BPM for quick typing
     bpmEl.focus();
     bpmEl.select();
   }
+
 })();
+
 // Example: listen to calculator return
 window.addEventListener('calc:return', (e) => {
   const v = e.detail; // {type:'delay', note, bpm, mode, ms, samples, sampleRate}
