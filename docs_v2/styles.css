@@ -1,0 +1,85 @@
+/* Music Cheatsheets v2: simple, GitHub Pages-friendly styles */
+:root{
+  --bg:#0f1115;
+  --text:#e6edf3;
+  --muted:#9aa6b2;
+  --rule:rgba(255,255,255,.08);
+  --accent:#7fffd4; /* aqua mint */
+  --maxw:900px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font:17px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+}
+main{max-width:var(--maxw); margin:28px auto 64px; padding:0 18px}
+
+.hero{margin-bottom:22px}
+h1{margin:0 0 8px 0; font-weight:800; letter-spacing:.2px}
+.quicklinks{display:flex; gap:12px; flex-wrap:wrap; margin:8px 0 0}
+.quicklinks a{ color:var(--text); background:#0b1220; padding:8px 10px; border-radius:8px; text-decoration:none; border:1px solid var(--rule) }
+.quicklinks a:hover{ border-color: var(--accent) }
+
+.toc{ border:1px solid var(--rule); border-radius:10px; padding:12px; background:#0b1220; margin:16px 0 20px 0 }
+.toc h3{margin:0 0 8px 0; font-size:14px; color:var(--muted)}
+.toc ul{list-style:none; margin:0; padding:0}
+.toc li{margin:6px 0}
+.toc a{ color:var(--text); text-decoration:none }
+.toc a:hover{ text-decoration:underline }
+
+.content{margin-top:12px}
+.content h2{margin:28px 0 6px 0; padding-top:10px; border-top:1px solid var(--rule)}
+.content h3{margin:22px 0 6px 0}
+.content p{margin:0 0 10px 0}
+.content ul{margin:0 0 12px 0; padding-left:18px}
+.content li{margin:6px 0}
+
+pre{ background:#0b1220; border:1px solid var(--rule); border-radius:10px; padding:12px; overflow:auto; margin:12px 0 }
+code{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.95em }
+.copybar{ display:flex; justify-content:flex-end; gap:8px; margin:-6px 0 6px 0 }
+.copybtn{ background:#10203a; color:var(--text); border:1px solid var(--rule); padding:6px 10px; border-radius:8px; cursor:pointer }
+.copybtn:hover{ border-color: var(--accent) }
+
+.loading{ color:var(--muted) }
+.footer{ margin-top:28px; color:var(--muted); font-size:.95em }
+hr{ border:0; border-top:1px solid var(--rule); margin:20px 0 }
+
+/* Cards grid */
+.cards{ display:grid; gap:16px; margin:12px 0 8px; grid-template-columns: 1fr }
+@media (min-width:760px){ .cards{ grid-template-columns: repeat(2, minmax(320px, 1fr)) } }
+@media (min-width:980px){ .cards{ grid-template-columns: repeat(3, minmax(320px, 1fr)) } }
+
+.card{
+  background:#0b1220; border:1px solid var(--rule); border-radius:12px; padding:14px;
+  display:flex; flex-direction:column; gap:10px; min-height: 200px;
+}
+.card header h2{ margin:0 0 2px 0; font-size:18px }
+.card header .muted{ margin:0; color:var(--muted); font-size:14px }
+.card .tight{ margin:0; padding-left:18px }
+.card .tight li{ margin:6px 0 }
+.card footer{ margin-top:auto }
+.cta{ display:inline-block; padding:8px 10px; border-radius:8px; border:1px solid var(--rule); color:var(--text); text-decoration:none }
+.cta:hover{ border-color: var(--accent) }
+
+/* Inline visuals */
+.sparkline svg{ width:100%; height:28px }
+.sparkline polyline{ fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; opacity:.95 }
+.gauge svg{ width:120px; height:auto; display:block }
+.gauge .arc{ fill:none; stroke:var(--rule); stroke-width:3 }
+.gauge .hand{ stroke:var(--accent); stroke-width:2; stroke-linecap:round }
+.gauge .needle{ fill:var(--accent) }
+
+/* Desktop: horizontal card composition via stable 2-column grid */
+@media (min-width:900px){
+  .card{
+    display:grid;
+    grid-template-columns: 120px 1fr; /* left visual, right content */
+    grid-template-rows: auto 1fr auto; /* header, list grows, footer */
+    align-items:start; gap:12px;
+  }
+  .card .sparkline, .card .gauge{ grid-column:1; grid-row:1 / span 3; align-self:center }
+  .card header{ grid-column:2; grid-row:1; margin:0 }
+  .card ul.tight{ grid-column:2; grid-row:2; margin:0 }
+  .card footer{ grid-column:2; grid-row:3; align-self:end; margin-top:0 }
+}

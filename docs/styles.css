@@ -1,63 +1,69 @@
 /* Minimal, readable, devhints-style theme */
 /* — design rules: skinny cards, high contrast, one accent, big whitespace — */
 
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
+/* === Color palette === */
 :root {
   --bg: #0f1115;
-  --text: #e6edf3;
-  --muted: #9aa6b2;
+  --text-strong: #f1f5f9;   /* headings, important */
+  --text-body: #cbd5e1;     /* body copy */
+  --muted: #94a3b8;
   --rule: rgba(255,255,255,.08);
-  --accent: #2b8cff;
+  --accent: #38bdf8;        /* sky blue */
 }
 
 :root.light {
-  --bg: #f9fafb;
-  --text: #1e293b;
-  --muted: #6b7280;
+  --bg: #ffffff;
+  --text-strong: #0f172a;   /* headings */
+  --text-body: #334155;     /* body copy */
+  --muted: #64748b;
   --rule: rgba(0,0,0,.08);
-  --accent: #302b89;
+  --accent: #2563eb;        /* classic dev blue */
 }
 
-
+/* === Base === */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
+
 body {
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
   font-size: 15px;
   line-height: 1.6;
   background: var(--bg);
-  color: var(--text);
+  color: var(--text-body);
 }
+
+main { max-width: 1020px; margin: 28px auto 64px; padding: 0 18px; }
 
 h1 {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: -.01em;
   margin: 0 0 12px;
+  color: var(--text-strong);
 }
-
 h2 {
   font-size: 18px;
   font-weight: 600;
   margin: 20px 0 8px;
   border-bottom: 1px solid var(--rule);
   padding-bottom: 4px;
+  color: var(--text-strong);
 }
-
 h3 {
   font-size: 15px;
   font-weight: 600;
   margin: 16px 0 6px;
+  color: var(--text-strong);
 }
 
-main { max-width: 1020px; margin: 28px auto 64px; padding: 0 18px; }
-
-.hero { margin-bottom: 22px; }
-h1 { margin: 0 0 8px 0; font-weight: 600; letter-spacing: .2px; font-size: 28px; }
 .subtitle { color: var(--muted); margin: 0 0 12px 0; }
 
+/* === Quicklinks === */
 .quicklinks { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 0; }
 .quicklinks a {
-  color: var(--text);
+  color: var(--text-strong);
   background: #0b1220;
   padding: 8px 10px;
   border-radius: 8px;
@@ -67,8 +73,7 @@ h1 { margin: 0 0 8px 0; font-weight: 600; letter-spacing: .2px; font-size: 28px;
 :root.light .quicklinks a { background: #f7f7f7; }
 .quicklinks a:hover { border-color: var(--accent); }
 
-a { color: var(--accent); }
-
+/* === TOC === */
 .toc {
   border: 1px solid var(--rule);
   border-radius: 10px;
@@ -80,38 +85,33 @@ a { color: var(--accent); }
 .toc h3 { margin: 0 0 8px 0; font-size: 14px; color: var(--muted); }
 .toc ul { list-style: none; padding: 0; margin: 0; }
 .toc li { margin: 6px 0; }
-.toc a { color: var(--text); text-decoration: none; }
+.toc a { color: var(--accent); text-decoration: none; }
 .toc a:hover { text-decoration: underline; }
 
+/* === Content (Markdown output) === */
 .content { margin-top: 12px; }
-.content h2 { margin: 28px 0 6px 0; padding-top: 10px; border-top: 1px solid var(--rule); }
-.content h3 { margin: 22px 0 6px 0; }
+.content h2 { margin: 28px 0 6px 0; padding-top: 10px; border-top: 1px solid var(--rule); color: var(--text-strong); }
+.content h3 { margin: 22px 0 6px 0; color: var(--text-strong); }
 .content em, .content strong { letter-spacing: .2px; }
 .content p {
   margin: 0 0 12px;
-  color: var(--text);
+  color: var(--text-body);
 }
-
 .content ul, .content ol {
   margin: 0 0 12px 0;
   padding-left: 20px;
-  color: var(--text);
+  color: var(--text-body);
 }
-
-.content li {
-  margin: 6px 0;
-}
-
+.content li { margin: 6px 0; }
 .content a {
   color: var(--accent);
   font-weight: 500;
   text-decoration: none;
+  transition: text-decoration .15s ease;
 }
-.content a:hover {
-  text-decoration: underline;
-}
+.content a:hover { text-decoration: underline; }
 
-
+/* === Code blocks === */
 .content pre {
   background: #0b1220;
   border: 1px solid var(--rule);
@@ -122,14 +122,13 @@ a { color: var(--accent); }
   font-size: 14px;
 }
 :root.light .content pre { background: #f4f4f5; }
-
 .content code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: .95em;
   color: var(--accent);
 }
 
-
+/* === Copy buttons === */
 .copybar {
   display: flex;
   justify-content: flex-end;
@@ -137,8 +136,8 @@ a { color: var(--accent); }
   margin: -6px 0 6px 0;
 }
 .copybtn {
-  background: #10203a;
-  color: var(--text);
+  background:#10203a;
+  color: var(--text-body);
   border: 1px solid var(--rule);
   padding: 6px 10px;
   border-radius: 8px;
@@ -150,7 +149,7 @@ a { color: var(--accent); }
 .footer { margin-top: 28px; color: var(--muted); font-size: .95em; }
 hr { border: 0; border-top: 1px solid var(--rule); margin: 20px 0; }
 
-/* ===== Card grid: DevHints style ===== */
+/* === Cards (DevHints style) === */
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -180,10 +179,11 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 20px 0; }
   font-size: 16px;
   font-weight: 600;
   margin: 0 0 4px;
+  color: var(--text-strong);
 }
 .card header .muted { color: var(--muted); font-size: 13px; }
 
-.card .tight { margin: 0; padding-left: 18px; font-size: 14px; }
+.card .tight { margin: 0; padding-left: 18px; font-size: 14px; color: var(--text-body); }
 .card .tight li { margin: 4px 0; }
 .card footer { margin-top: auto; }
 
@@ -192,33 +192,27 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 20px 0; }
   padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid var(--rule);
-  color: var(--text);
+  color: var(--accent);
   text-decoration: none;
   font-size: 13px;
 }
 .cta:hover { border-color: var(--accent); }
-a, .cta {
-  color: var(--accent);
-  font-weight: 500;
-  text-decoration: none;
-}
-a:hover, .cta:hover {
-  text-decoration: underline;
-}
+a, .cta { color: var(--accent); font-weight: 500; text-decoration: none; }
+a:hover, .cta:hover { text-decoration: underline; }
 
-/* Pills */
+/* === Pills === */
 .pillrow { display: flex; gap: 6px; flex-wrap: wrap; }
 .pill {
   background: #0f1a2c;
   border: 1px solid var(--rule);
-  color: var(--text);
+  color: var(--text-body);
   padding: 3px 8px;
   border-radius: 999px;
   font-size: 12px;
 }
 :root.light .pill { background: #eeeeee; }
 
-/* Sparkline */
+/* === Sparkline === */
 .sparkline svg { width: 100%; height: 28px; }
 .sparkline polyline {
   fill: none;
@@ -229,13 +223,13 @@ a:hover, .cta:hover {
   opacity: .9;
 }
 
-/* Gauge */
+/* === Gauge === */
 .gauge svg { width: 120px; height: auto; display: block; }
 .gauge .arc { fill: none; stroke: var(--rule); stroke-width: 3; }
 .gauge .hand { stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
 .gauge .needle { fill: var(--accent); }
 
-/* Toggle button: top right */
+/* === Toggle button: top right === */
 .togglebtn {
   position: absolute;
   top: 16px;
@@ -244,7 +238,7 @@ a:hover, .cta:hover {
   background: none;
   border: 1px solid var(--rule);
   border-radius: 8px;
-  color: var(--text);
+  color: var(--text-body);
   padding: 6px 10px;
   cursor: pointer;
   font-size: 14px;
